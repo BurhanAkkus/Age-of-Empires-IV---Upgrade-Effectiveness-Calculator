@@ -1,0 +1,72 @@
+{
+    "FeudalUpgrade": {
+        "type": "Ageup",
+        "cost": 2150,
+        "bonuses": {
+            "LongBowman": {
+                "hp_bonus": 10,
+                "attack_bonus": 2,
+                "melee_armor_bonus": 0,
+                "ranged_armor_bonus": 0
+            },
+            "French_Knight": {
+                "hp_bonus": 40,
+                "attack_bonus": 5,
+                "melee_armor_bonus": 1,
+                "ranged_armor_bonus": 1
+            }
+        }
+    },
+    "CastleUpgrade": {
+        "type": "Ageup",
+        "cost": 300,
+        "bonuses": {
+            "LongBowman": {
+                "hp_bonus": 25,
+                "attack_bonus": 3,
+                "melee_armor_bonus": 0,
+                "ranged_armor_bonus": 1
+            },
+            "French_Knight": {
+                "hp_bonus": 50,
+                "attack_bonus": 6,
+                "melee_armor_bonus": 2,
+                "ranged_armor_bonus": 1
+            }
+        }
+    },
+    "ImperialUpgrade": {
+        "type": "Ageup",
+        "cost": 500,
+        "bonuses": {
+            "LongBowman": {
+                "hp_bonus": 30,
+                "attack_bonus": 4,
+                "melee_armor_bonus": 1,
+                "ranged_armor_bonus": 1
+            },
+            "French_Knight": {
+                "hp_bonus": 60,
+                "attack_bonus": 7,
+                "melee_armor_bonus": 3,
+                "ranged_armor_bonus": 2
+            }
+        }
+    },
+    "BlackSmithFeudalRangedArmor": {
+        "type": "Research",
+        "attack_bonus": 0,
+        "hp_bonus": 0,
+        "melee_armor_bonus": 0,
+        "ranged_armor_bonus": 1,
+        "cost": 175
+    },
+    "BlackSmithFeudalRangedAttack": {
+        "type": "Research",
+        "attack_bonus": 1,
+        "hp_bonus": 0,
+        "melee_armor_bonus": 0,
+        "ranged_armor_bonus": 0,
+        "cost": 175
+    }
+}

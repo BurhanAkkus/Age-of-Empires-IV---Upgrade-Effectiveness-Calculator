@@ -43,23 +43,100 @@ class Unit:
         else:
             raise ValueError(f"Unit '{self.unit_name}' not found in stats file.")
 
+    def apply_upgrade(self, upgrade):
+        """
+        Applies the bonuses from the upgrade to the unit.
+
+        Parameters:
+        upgrade (Upgrade): The upgrade to be applied to the unit.
+        """
+        if upgrade.type == "Ageup" and upgrade.unit_name == self.unit_name:
+            self.hp += upgrade.hp_bonus
+            self.attack_damage += upgrade.attack_bonus
+            self.melee_armor += upgrade.melee_armor_bonus
+            self.ranged_armor += upgrade.ranged_armor_bonus
+        elif upgrade.type == "Research":
+            self.hp += upgrade.hp_bonus
+            self.attack_damage += upgrade.attack_bonus
+            self.melee_armor += upgrade.melee_armor_bonus
+            self.ranged_armor += upgrade.ranged_armor_bonus
+        else:
+            raise ValueError(f"Upgrade '{upgrade.upgrade_name}' is not applicable to unit '{self.unit_name}'.")
+
+    def apply_multiple_upgrades(self, upgrades):
+        """
+        Applies multiple upgrades to the unit, combining their effects.
+
+        Parameters:
+        upgrades (list of Upgrade): The upgrades to be applied to the unit.
+        """
+        for upgrade in upgrades:
+            self.apply_upgrade(upgrade)
+
 class Upgrade:
-    def __init__(self, attack_bonus, hp_bonus, melee_armor_bonus, ranged_armor_bonus, cost):
+    _upgrade_stats_cache = None
+
+    def __init__(self, upgrade_name, unit_name=None):
         """
         Represents an upgrade in Age of Empires IV.
 
         Parameters:
-        attack_bonus (int): The additional attack bonus provided by the upgrade.
-        hp_bonus (int): The additional HP bonus provided by the upgrade.
-        melee_armor_bonus (int): The additional melee armor bonus provided by the upgrade.
-        ranged_armor_bonus (int): The additional ranged armor bonus provided by the upgrade.
-        cost (float): The cost of the upgrade.
+        upgrade_name (str): The name of the upgrade.
+        unit_name (str, optional): The name of the unit associated with the upgrade.
         """
-        self.attack_bonus = attack_bonus
-        self.hp_bonus = hp_bonus
-        self.melee_armor_bonus = melee_armor_bonus
-        self.ranged_armor_bonus = ranged_armor_bonus
-        self.cost = cost
+        self.upgrade_name = upgrade_name
+        self.unit_name = unit_name
+        self.lookup_stats()
+
+    @classmethod
+    def load_upgrade_stats(cls):
+        """
+        Loads upgrade stats from the JSON file if not already loaded.
+        """
+        if cls._upgrade_stats_cache is None:
+            with open('upgrade_stats.json', 'r') as f:
+                cls._upgrade_stats_cache = json.load(f)
+
+    def lookup_stats(self):
+        """
+        Looks up upgrade stats from a predefined JSON file based on upgrade name.
+        """
+        Upgrade.load_upgrade_stats()
+        if self.upgrade_name in Upgrade._upgrade_stats_cache:
+            stats = Upgrade._upgrade_stats_cache[self.upgrade_name]
+            self.type = stats['type']
+            self.cost = stats['cost']
+            if self.type == "Ageup" and self.unit_name:
+                bonuses = stats['bonuses'].get(self.unit_name, None)
+                if bonuses:
+                    self.hp_bonus = bonuses['hp_bonus']
+                    self.attack_bonus = bonuses['attack_bonus']
+                    self.melee_armor_bonus = bonuses['melee_armor_bonus']
+                    self.ranged_armor_bonus = bonuses['ranged_armor_bonus']
+                else:
+                    raise ValueError(f"No specific bonuses found for unit '{self.unit_name}' in upgrade '{self.upgrade_name}'.")
+            elif self.type == "Research":
+                self.attack_bonus = stats['attack_bonus']
+                self.hp_bonus = stats['hp_bonus']
+                self.melee_armor_bonus = stats['melee_armor_bonus']
+                self.ranged_armor_bonus = stats['ranged_armor_bonus']
+            else:
+                raise ValueError(f"Upgrade '{self.upgrade_name}' requires a unit name for Ageup type upgrades.")
+        else:
+            raise ValueError(f"Upgrade '{self.upgrade_name}' not found in stats file.")
+
+    def add_upgrade(self, other_upgrade):
+        """
+        Combines the effects of another upgrade with this one.
+
+        Parameters:
+        other_upgrade (Upgrade): The upgrade to be combined with this one.
+        """
+        self.attack_bonus += other_upgrade.attack_bonus
+        self.hp_bonus += other_upgrade.hp_bonus
+        self.melee_armor_bonus += other_upgrade.melee_armor_bonus
+        self.ranged_armor_bonus += other_upgrade.ranged_armor_bonus
+        self.cost += other_upgrade.cost
 
 def calculate_upgrade_effectiveness(upgrade, unit):
     """
@@ -79,7 +156,22 @@ def calculate_upgrade_effectiveness(upgrade, unit):
 
 # Example usage
 unit = Unit("LongBowman", "Feudal")
-upgrade = Upgrade(attack_bonus=1, hp_bonus=0, melee_armor_bonus=0, ranged_armor_bonus=0, cost=175)
+upgrade = Upgrade("FeudalUpgrade", unit_name="LongBowman")
+
+# Apply the upgrade to the unit
+#unit.apply_upgrade(upgrade)
+#print(f"Unit after upgrade - HP: {unit.hp}, Attack Damage: {unit.attack_damage}, Melee Armor: {unit.melee_armor}, Ranged Armor: {unit.ranged_armor}")
 
 minimum_army_count = calculate_upgrade_effectiveness(upgrade, unit)
+print("Minimum standing army count to make the upgrade effective:", minimum_army_count)
+
+print(f"Unit after research upgrade - HP: {unit.hp}, Attack Damage: {unit.attack_damage}, Melee Armor: {unit.melee_armor}, Ranged Armor: {unit.ranged_armor}")
+
+# Combine two upgrades
+combined_upgrade = Upgrade("FeudalUpgrade", unit_name="LongBowman")
+upgrade_research = Upgrade("BlackSmithFeudalRangedAttack")
+combined_upgrade.add_upgrade(upgrade_research)
+print(f"Combined Upgrade - HP Bonus: {combined_upgrade.hp_bonus}, Attack Bonus: {combined_upgrade.attack_bonus}, Melee Armor Bonus: {combined_upgrade.melee_armor_bonus}, Ranged Armor Bonus: {combined_upgrade.ranged_armor_bonus}, Cost: {combined_upgrade.cost}")
+
+minimum_army_count = calculate_upgrade_effectiveness(combined_upgrade, unit)
 print("Minimum standing army count to make the upgrade effective:", minimum_army_count)
