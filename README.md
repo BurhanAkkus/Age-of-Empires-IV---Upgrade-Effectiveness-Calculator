@@ -26,9 +26,21 @@ minimum_army_count = calculate_upgrade_effectiveness(upgrade, unit)
 print("Minimum standing army count to make the upgrade effective:", minimum_army_count)
 ```
 
+## Future Plans
+In the future, I plan to add the following features to enhance the upgrade effectiveness calculator:
+
+1. **Unit Types**: Add unit categorization as Ranged or Melee to better simulate different combat scenarios.
+
+2. **Scaling Factor (Unit, NumberOfUnits)**: Implement a scaling factor to handle the nonlinear relationship between army effectiveness and unit count, considering effects such as:
+   - Overkilling for ranged units.
+   - Pathing and crowding issues for melee units.
+
+3. **Upgrade Effectiveness Against Enemies**: Extend the `calculate_upgrade_effectiveness` function to take into account the enemy's armor and attack damage, providing a more comprehensive evaluation of the effectiveness of upgrades in various combat situations.
+
+These features will bring more depth and accuracy to the calculations, making the tool a more powerful resource for players seeking strategic insights.
+
 ## Contributing
 Contributions are welcome! Feel free to submit issues or pull requests to enhance the tool.
 
 ## License
 This project is licensed under the MIT License.
-
