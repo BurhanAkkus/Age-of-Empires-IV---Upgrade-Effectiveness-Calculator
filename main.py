@@ -1,5 +1,6 @@
 import json
 import math
+import copy
 
 class Unit:
     _unit_stats_cache = None
@@ -62,16 +63,6 @@ class Unit:
             self.ranged_armor += upgrade.ranged_armor_bonus
         else:
             raise ValueError(f"Upgrade '{upgrade.upgrade_name}' is not applicable to unit '{self.unit_name}'.")
-
-    def apply_multiple_upgrades(self, upgrades):
-        """
-        Applies multiple upgrades to the unit, combining their effects.
-
-        Parameters:
-        upgrades (list of Upgrade): The upgrades to be applied to the unit.
-        """
-        for upgrade in upgrades:
-            self.apply_upgrade(upgrade)
 
 class Upgrade:
     _upgrade_stats_cache = None
@@ -138,6 +129,18 @@ class Upgrade:
         self.ranged_armor_bonus += other_upgrade.ranged_armor_bonus
         self.cost += other_upgrade.cost
 
+def basic_effectiveness(unit):
+    """
+    Calculates the basic effectiveness of the unit.
+
+    Parameters:
+    unit (Unit): The unit whose effectiveness is to be calculated.
+
+    Returns:
+    float: The effectiveness value, which is the product of unit's HP and attack damage.
+    """
+    return unit.hp * unit.attack_damage
+
 def calculate_upgrade_effectiveness(upgrade, unit):
     """
     Calculates the minimum standing army count required to make the upgrade effective.
@@ -149,8 +152,15 @@ def calculate_upgrade_effectiveness(upgrade, unit):
     Returns:
     int: The minimum standing army count that makes the upgrade effective (rounded up).
     """
-    powerup_factor = ((unit.hp + upgrade.hp_bonus) * (unit.attack_damage + upgrade.attack_bonus)) / (unit.hp * unit.attack_damage)
+    # Create a copy of the unit and apply the upgrade to the copy
+    upgraded_unit = copy.deepcopy(unit)
+    upgraded_unit.apply_upgrade(upgrade)
+
+    # Calculate powerup factor as the ratio of upgraded effectiveness to original effectiveness
+    powerup_factor = basic_effectiveness(upgraded_unit) / basic_effectiveness(unit)
     print(f"Powerup Factor: {powerup_factor}")
+
+    # Calculate the effectiveness threshold
     effectiveness_threshold = upgrade.cost / (unit.cost * (powerup_factor - 1))
     return math.ceil(effectiveness_threshold)
 
@@ -158,20 +168,18 @@ def calculate_upgrade_effectiveness(upgrade, unit):
 unit = Unit("LongBowman", "Feudal")
 upgrade = Upgrade("FeudalUpgrade", unit_name="LongBowman")
 
-# Apply the upgrade to the unit
-#unit.apply_upgrade(upgrade)
-#print(f"Unit after upgrade - HP: {unit.hp}, Attack Damage: {unit.attack_damage}, Melee Armor: {unit.melee_armor}, Ranged Armor: {unit.ranged_armor}")
-
+# Do not apply the upgrade to the unit, just calculate effectiveness
 minimum_army_count = calculate_upgrade_effectiveness(upgrade, unit)
 print("Minimum standing army count to make the upgrade effective:", minimum_army_count)
 
-print(f"Unit after research upgrade - HP: {unit.hp}, Attack Damage: {unit.attack_damage}, Melee Armor: {unit.melee_armor}, Ranged Armor: {unit.ranged_armor}")
+# Example usage for research upgrade
+upgrade_research = Upgrade("BlackSmithFeudalRangedArmor")
 
 # Combine two upgrades
-combined_upgrade = Upgrade("FeudalUpgrade", unit_name="LongBowman")
-upgrade_research = Upgrade("BlackSmithFeudalRangedAttack")
-combined_upgrade.add_upgrade(upgrade_research)
-print(f"Combined Upgrade - HP Bonus: {combined_upgrade.hp_bonus}, Attack Bonus: {combined_upgrade.attack_bonus}, Melee Armor Bonus: {combined_upgrade.melee_armor_bonus}, Ranged Armor Bonus: {combined_upgrade.ranged_armor_bonus}, Cost: {combined_upgrade.cost}")
+general_upgrade = Upgrade("FeudalUpgrade", unit_name="LongBowman")
+general_upgrade.add_upgrade(upgrade_research)
+print(f"Combined Upgrade - HP Bonus: {general_upgrade.hp_bonus}, Attack Bonus: {general_upgrade.attack_bonus}, Melee Armor Bonus: {general_upgrade.melee_armor_bonus}, Ranged Armor Bonus: {general_upgrade.ranged_armor_bonus}, Cost: {general_upgrade.cost}")
 
-minimum_army_count = calculate_upgrade_effectiveness(combined_upgrade, unit)
-print("Minimum standing army count to make the upgrade effective:", minimum_army_count)
+# Calculate and print unit effectiveness
+effectiveness_value = basic_effectiveness(unit)
+print(f"Effectiveness of the unit: {effectiveness_value}")
