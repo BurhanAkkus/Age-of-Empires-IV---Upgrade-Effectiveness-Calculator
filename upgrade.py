@@ -21,6 +21,7 @@ class Upgrade:
         self.ranged_armor_bonus = 0
         self.cost = 0
         self.type = None  # Add the type attribute here
+        self.prerequisite = None  # Prerequisite upgrade
 
         self.lookup_stats()
 
@@ -41,7 +42,8 @@ class Upgrade:
         if self.upgrade_name in Upgrade._upgrade_stats_cache:
             stats = Upgrade._upgrade_stats_cache[self.upgrade_name]
             self.cost = stats['cost']
-            self.type = stats['type']  # Set the type attribute from stats
+            self.type = stats['type']
+            self.prerequisite = stats.get('prerequisite')  # Load prerequisite if available
 
             if self.type == "Ageup" and self.unit_name:
                 bonuses = stats['bonuses'].get(self.unit_name, None)
@@ -66,7 +68,7 @@ class Upgrade:
 
     def add_upgrade(self, other_upgrade):
         """
-        Combines the effects of another upgrade with this one.
+        Combines the effects of another upgrade with this one, including prerequisites.
 
         Parameters:
         other_upgrade (Upgrade): The upgrade to be combined with this one.
@@ -76,3 +78,33 @@ class Upgrade:
         self.melee_armor_bonus += other_upgrade.melee_armor_bonus
         self.ranged_armor_bonus += other_upgrade.ranged_armor_bonus
         self.cost += other_upgrade.cost
+
+        # Add prerequisite if the other upgrade has one
+        if other_upgrade.has_prerequisite() and other_upgrade.prerequisite not in self.get_prerequisites():
+            if self.prerequisite is None:
+                self.prerequisite = []
+            if isinstance(self.prerequisite, str):
+                self.prerequisite = [self.prerequisite]
+            self.prerequisite.append(other_upgrade.prerequisite)
+
+    def has_prerequisite(self):
+        """
+        Checks if the upgrade has a prerequisite.
+
+        Returns:
+        bool: True if the upgrade has a prerequisite, False otherwise.
+        """
+        return self.prerequisite is not None
+
+    def get_prerequisites(self):
+        """
+        Returns the names of the prerequisite upgrades, if any.
+
+        Returns:
+        list: A list of prerequisite upgrade names, or an empty list if there are no prerequisites.
+        """
+        if self.prerequisite is None:
+            return []
+        if isinstance(self.prerequisite, str):
+            return [self.prerequisite]
+        return self.prerequisite
