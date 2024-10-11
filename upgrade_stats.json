@@ -58,8 +58,7 @@
         "hp_bonus": 0,
         "melee_armor_bonus": 0,
         "ranged_armor_bonus": 0,
-        "cost": 175,
-        "prerequisite": "BlackSmithFeudalMeleeArmor"
+        "cost": 175
     },
     "BlackSmithCastleRangedArmor": {
         "type": "Research",
