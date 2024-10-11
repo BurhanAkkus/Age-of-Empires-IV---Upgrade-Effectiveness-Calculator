@@ -1,26 +1,18 @@
 {
     "LongBowman": {
-        "DarkAge": {},
-        "Feudal": {
-            "hp": 70,
-            "attack_damage": 6,
-            "melee_armor": 0,
-            "ranged_armor": 0,
-            "cost": 90
-        },
-        "Castle": {
-            "hp": 80,
-            "attack_damage": 8,
-            "melee_armor": 0,
-            "ranged_armor": 0,
-            "cost": 90
-        },
-        "Imperial": {
-            "hp": 95,
-            "attack_damage": 9,
-            "melee_armor": 0,
-            "ranged_armor": 0,
-            "cost": 90
-        }
+        "type": "Ranged",
+        "hp": 70,
+        "attack_damage": 6,
+        "melee_armor": 0,
+        "ranged_armor": 0,
+        "cost": 90
+    },
+    "RoyalKnight": {
+        "type": "Melee",
+        "hp": 190,
+        "attack_damage": 19,
+        "melee_armor": 3,
+        "ranged_armor": 3,
+        "cost": 140
     }
 }
