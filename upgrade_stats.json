@@ -15,7 +15,7 @@
                 "melee_armor_bonus": 0,
                 "ranged_armor_bonus": 0
             },
-            "French_Knight": {
+            "RoyalKnight": {
                 "hp_bonus": 40,
                 "attack_bonus": 5,
                 "melee_armor_bonus": 1,
@@ -33,7 +33,7 @@
                 "melee_armor_bonus": 0,
                 "ranged_armor_bonus": 0
             },
-            "French_Knight": {
+            "RoyalKnight": {
                 "hp_bonus": 40,
                 "attack_bonus": 5,
                 "melee_armor_bonus": 1,
