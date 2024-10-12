@@ -6,7 +6,7 @@ from unit import Unit
 from upgrade import Upgrade
 
 unit_names = ["LongBowman", "RoyalKnight"]
-upgrade_names = [
+upgrade_names = ["CastleLandmark","ImperialLandmark",
     "VeteranUpgrade", "EliteUpgrade", "BlackSmithFeudalMeleeArmor",
     "BlackSmithFeudalRangedArmor", "BlackSmithFeudalRangedAttack",
     "BlackSmithCastleMeleeArmor", "BlackSmithCastleRangedArmor",
@@ -36,9 +36,9 @@ def basic_effectiveness(unit):
     Returns:
     float: The effectiveness value, which is the product of unit's HP and attack damage.
     """
-    return unit.hp * unit.attack_damage
+    return unit.hp * unit.getAttack()
 
-def calculate_upgrade_effectiveness(upgrade, unit):
+def calculate_upgrade_effectiveness(upgrades, unit):
     """
     Calculates the minimum standing army count required to make the upgrades effective.
 
@@ -85,7 +85,7 @@ def main():
 
             unit_name = unit_names[int(unit_choice) - 1]
             unit = Unit(unit_name)
-            print(f"Selected unit: {unit.unit_name}, HP: {unit.hp}, Attack Damage: {unit.attack_damage}")
+            print(f"Selected unit: {unit.unit_name}, HP: {unit.hp}, Attack Damage: {unit.getAttack()}")
 
             while True:# User selects upgrades to combine
                 selected_upgrades = []
