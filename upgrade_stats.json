@@ -1,44 +1,60 @@
 {
-    "VeteranUpgrade": {
+    "CastleLandmark": {
         "type": "Ageup",
-        "cost": 2150,
+        "cost": 1800
+    },
+    "ImperialLandmark": {
+        "type": "Ageup",
+        "cost": 3600,
+        "prerequisites": ["CastleLandmark"]
+    },
+    "VeteranUpgrade": {
+        "type": "UnitUpgrade",
+        "cost": 350,
         "bonuses": {
             "LongBowman": {
                 "hp_bonus": 10,
-                "attack_bonus": 2,
+                "ranged_attack_bonus": 2,
+                "melee_attack_bonus": 0,
                 "melee_armor_bonus": 0,
                 "ranged_armor_bonus": 0
             },
             "RoyalKnight": {
                 "hp_bonus": 40,
-                "attack_bonus": 5,
+                "ranged_attack_bonus": 0,
+                "melee_attack_bonus": 5,
                 "melee_armor_bonus": 1,
                 "ranged_armor_bonus": 1
             }
-        }
+        },
+        "prerequisites": ["CastleLandmark"]
     },
     "EliteUpgrade": {
-        "type": "Ageup",
-        "cost": 4600,
-        "prerequisite": "VeteranUpgrade",
+        "type": "UnitUpgrade",
+        "cost": 1000,
+        "prerequisites": "VeteranUpgrade",
         "bonuses": {
             "LongBowman": {
                 "hp_bonus": 15,
-                "attack_bonus": 1,
+                "ranged_attack_bonus": 1,
+                "melee_attack_bonus": 0,
                 "melee_armor_bonus": 0,
                 "ranged_armor_bonus": 0
             },
             "RoyalKnight": {
                 "hp_bonus": 40,
-                "attack_bonus": 5,
+                "ranged_attack_bonus": 0,
+                "melee_attack_bonus": 5,
                 "melee_armor_bonus": 1,
                 "ranged_armor_bonus": 1
             }
-        }
+        },
+        "prerequisites": ["ImperialLandmark"]
     },
     "BlackSmithFeudalMeleeArmor": {
         "type": "Research",
-        "attack_bonus": 0,
+        "ranged_attack_bonus": 0,
+        "melee_attack_bonus": 0,
         "hp_bonus": 0,
         "melee_armor_bonus": 1,
         "ranged_armor_bonus": 0,
@@ -46,7 +62,8 @@
     },
     "BlackSmithFeudalRangedArmor": {
         "type": "Research",
-        "attack_bonus": 0,
+        "ranged_attack_bonus": 0,
+        "melee_attack_bonus": 0,
         "hp_bonus": 0,
         "melee_armor_bonus": 0,
         "ranged_armor_bonus": 1,
@@ -54,7 +71,17 @@
     },
     "BlackSmithFeudalRangedAttack": {
         "type": "Research",
-        "attack_bonus": 1,
+        "ranged_attack_bonus": 1,
+        "melee_attack_bonus": 0,
+        "hp_bonus": 0,
+        "melee_armor_bonus": 0,
+        "ranged_armor_bonus": 0,
+        "cost": 175
+    },
+    "BlackSmithFeudalMeleeAttack": {
+        "type": "Research",
+        "ranged_attack_bonus": 0,
+        "melee_attack_bonus": 1,
         "hp_bonus": 0,
         "melee_armor_bonus": 0,
         "ranged_armor_bonus": 0,
@@ -62,56 +89,82 @@
     },
     "BlackSmithCastleRangedArmor": {
         "type": "Research",
-        "attack_bonus": 0,
+        "ranged_attack_bonus": 0,
+        "melee_attack_bonus": 0,
         "hp_bonus": 0,
         "melee_armor_bonus": 0,
         "ranged_armor_bonus": 1,
         "cost": 350,
-        "prerequisite": "BlackSmithFeudalRangedArmor"
+        "prerequisites": ["BlackSmithFeudalRangedArmor"]
     },
     "BlackSmithCastleMeleeArmor": {
         "type": "Research",
-        "attack_bonus": 0,
+        "ranged_attack_bonus": 0,
+        "melee_attack_bonus": 0,
         "hp_bonus": 0,
         "melee_armor_bonus": 1,
         "ranged_armor_bonus": 0,
         "cost": 350,
-        "prerequisite": "BlackSmithFeudalMeleeArmor"
+        "prerequisites": ["BlackSmithFeudalMeleeArmor"]
     },
     "BlackSmithCastleRangedAttack": {
         "type": "Research",
-        "attack_bonus": 1,
+        "ranged_attack_bonus": 1,
+        "melee_attack_bonus": 0,
         "hp_bonus": 0,
         "melee_armor_bonus": 0,
         "ranged_armor_bonus": 0,
         "cost": 350,
-        "prerequisite": "BlackSmithFeudalRangedAttack"
+        "prerequisites": ["BlackSmithFeudalRangedAttack"]
+    },
+    "BlackSmithCastleMeleeAttack": {
+        "type": "Research",
+        "ranged_attack_bonus": 0,
+        "melee_attack_bonus": 1,
+        "hp_bonus": 0,
+        "melee_armor_bonus": 0,
+        "ranged_armor_bonus": 0,
+        "cost": 350,
+        "prerequisites": ["BlackSmithFeudalMeleeAttack"]
     },
     "BlackSmithImperialRangedArmor": {
         "type": "Research",
-        "attack_bonus": 0,
+        "ranged_attack_bonus": 0,
+        "melee_attack_bonus": 0,
         "hp_bonus": 0,
         "melee_armor_bonus": 0,
         "ranged_armor_bonus": 1,
         "cost": 500,
-        "prerequisite": "BlackSmithCastleRangedArmor"
+        "prerequisites": ["BlackSmithCastleRangedArmor"]
     },
     "BlackSmithImperialMeleeArmor": {
         "type": "Research",
-        "attack_bonus": 0,
+        "ranged_attack_bonus": 0,
+        "melee_attack_bonus": 0,
         "hp_bonus": 0,
         "melee_armor_bonus": 1,
         "ranged_armor_bonus": 0,
         "cost": 500,
-        "prerequisite": "BlackSmithCastleMeleeArmor"
+        "prerequisites": ["BlackSmithCastleMeleeArmor"]
     },
     "BlackSmithImperialRangedAttack": {
         "type": "Research",
-        "attack_bonus": 1,
+        "ranged_attack_bonus": 1,
+        "melee_attack_bonus": 0,
         "hp_bonus": 0,
         "melee_armor_bonus": 0,
         "ranged_armor_bonus": 0,
         "cost": 500,
-        "prerequisite": "BlackSmithCastleRangedAttack"
+        "prerequisites": ["BlackSmithCastleRangedAttack"]
+    },
+    "BlackSmithImperialmeleeAttack": {
+        "type": "Research",
+        "ranged_attack_bonus": 0,
+        "melee_attack_bonus": 1,
+        "hp_bonus": 0,
+        "melee_armor_bonus": 0,
+        "ranged_armor_bonus": 0,
+        "cost": 500,
+        "prerequisites": ["BlackSmithCastleMeleeAttack"]
     }
 }
