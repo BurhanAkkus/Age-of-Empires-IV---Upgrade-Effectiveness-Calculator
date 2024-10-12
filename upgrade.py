@@ -16,7 +16,8 @@ class Upgrade:
 
         # Initialize bonuses to default values
         self.hp_bonus = 0
-        self.attack_bonus = 0
+        self.ranged_attack_bonus = 0
+        self.melee_attack_bonus = 0
         self.melee_armor_bonus = 0
         self.ranged_armor_bonus = 0
         self.cost = 0
@@ -43,25 +44,21 @@ class Upgrade:
             stats = Upgrade._upgrade_stats_cache[self.upgrade_name]
             self.cost = stats['cost']
             self.type = stats['type']
-            self.prerequisite = stats.get('prerequisite')  # Load prerequisite if available
+            self.prerequisite = stats.get('prerequisites')  # Load prerequisite if available
 
-            if self.type == "Ageup" and self.unit_name:
-                bonuses = stats['bonuses'].get(self.unit_name, None)
-                if bonuses:
-                    self.hp_bonus = bonuses['hp_bonus']
-                    self.attack_bonus = bonuses['attack_bonus']
-                    self.melee_armor_bonus = bonuses['melee_armor_bonus']
-                    self.ranged_armor_bonus = bonuses['ranged_armor_bonus']
-                else:
-                    raise ValueError(
-                        f"No specific bonuses found for unit '{self.unit_name}' in upgrade '{self.upgrade_name}'. Please check if the unit is valid for this upgrade.")
-            elif self.type == "Research":
-                self.attack_bonus = stats['attack_bonus']
+            if self.type == "UnitUpgrade":
+                stats= stats['bonuses'][self.unit_name]
+                self.ranged_attack_bonus = stats['ranged_attack_bonus']
+                self.melee_attack_bonus = stats['melee_attack_bonus']
                 self.hp_bonus = stats['hp_bonus']
                 self.melee_armor_bonus = stats['melee_armor_bonus']
                 self.ranged_armor_bonus = stats['ranged_armor_bonus']
-            else:
-                raise ValueError(f"Upgrade '{self.upgrade_name}' requires a unit name for Ageup type upgrades.")
+            elif self.type == "Research":
+                self.ranged_attack_bonus = stats['ranged_attack_bonus']
+                self.melee_attack_bonus = stats['melee_attack_bonus']
+                self.hp_bonus = stats['hp_bonus']
+                self.melee_armor_bonus = stats['melee_armor_bonus']
+                self.ranged_armor_bonus = stats['ranged_armor_bonus']
         else:
             raise ValueError(
                 f"Upgrade '{self.upgrade_name}' not found in stats file. Please verify the upgrade name in 'upgrade_stats.json'.")
@@ -73,7 +70,8 @@ class Upgrade:
         Parameters:
         other_upgrade (Upgrade): The upgrade to be combined with this one.
         """
-        self.attack_bonus += other_upgrade.attack_bonus
+        self.ranged_attack_bonus += other_upgrade.ranged_attack_bonus
+        self. melee_attack_bonus += other_upgrade.melee_attack_bonus
         self.hp_bonus += other_upgrade.hp_bonus
         self.melee_armor_bonus += other_upgrade.melee_armor_bonus
         self.ranged_armor_bonus += other_upgrade.ranged_armor_bonus
