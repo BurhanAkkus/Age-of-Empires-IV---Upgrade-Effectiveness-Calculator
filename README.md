@@ -3,7 +3,7 @@
 This repository contains a Python tool designed to help Age of Empires IV players evaluate the cost-effectiveness of unit upgrades. The tool allows you to calculate the minimum standing army count required to justify the cost of upgrades, helping you make informed strategic decisions.
 
 ## Features
-- **Unit and Upgrade Definition**: Define units and their stats for different ages (Dark Age, Feudal, Castle, Imperial).
+- **Unit and Upgrade Definition**: Define units and their stats.
 - **Upgrade Impact Calculation**: Calculate the basic effectiveness of units and how different upgrades affect them.
 - **Combine Upgrades**: Combine multiple upgrades and evaluate their cumulative effects on units.
 - **Customizable JSON Files**: Easily modify JSON files to add or update units and upgrades.
