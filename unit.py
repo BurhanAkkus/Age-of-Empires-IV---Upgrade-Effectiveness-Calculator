@@ -29,8 +29,10 @@ class Unit:
         Unit.load_unit_stats()
         if self.unit_name in Unit._unit_stats_cache:
             stats = Unit._unit_stats_cache[self.unit_name]
+            self.type = stats['type']
             self.hp = stats['hp']
-            self.attack_damage = stats['attack_damage']
+            self.ranged_attack_damage = stats['ranged_attack_damage']
+            self.melee_attack_damage = stats['melee_attack_damage']
             self.melee_armor = stats['melee_armor']
             self.ranged_armor = stats['ranged_armor']
             self.cost = stats['cost']
@@ -49,7 +51,10 @@ class Unit:
 
         if upgrade.unit_name is None or upgrade.unit_name == self.unit_name:
             self.hp += upgrade.hp_bonus
-            self.attack_damage += upgrade.attack_bonus
+            if(self.type == 'Ranged'):
+                self.ranged_attack_damage += upgrade.ranged_attack_bonus
+            else:
+                self.melee_attack_damage += upgrade.melee_attack_bonus
             self.melee_armor += upgrade.melee_armor_bonus
             self.ranged_armor += upgrade.ranged_armor_bonus
             self.applied_upgrades.append(upgrade.upgrade_name)  # Track the applied upgrade
@@ -76,3 +81,8 @@ class Unit:
         bool: True if the upgrade has been applied, False otherwise.
         """
         return upgrade.upgrade_name in self.applied_upgrades
+
+    def getAttack(self):
+        if(self.type == 'Ranged'):
+            return self.ranged_attack_damage
+        return self.melee_attack_damage
