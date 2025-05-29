@@ -19,12 +19,33 @@
                 "melee_armor_bonus": 0,
                 "ranged_armor_bonus": 0
             },
+            "Archer": {
+                "hp_bonus": 10,
+                "ranged_attack_bonus": 2,
+                "melee_attack_bonus": 0,
+                "melee_armor_bonus": 0,
+                "ranged_armor_bonus": 0
+            },
             "RoyalKnight": {
                 "hp_bonus": 40,
                 "ranged_attack_bonus": 0,
                 "melee_attack_bonus": 5,
                 "melee_armor_bonus": 1,
                 "ranged_armor_bonus": 1
+            },
+            "GhaziRider": {
+                "hp_bonus": 35,
+                "ranged_attack_bonus": 0,
+                "melee_attack_bonus": 3,
+                "melee_armor_bonus": 0,
+                "ranged_armor_bonus": 1
+            },
+            "ZhugeNu": {
+                "hp_bonus": 10,
+                "ranged_attack_bonus": 9,
+                "melee_attack_bonus": 0,
+                "melee_armor_bonus": 0,
+                "ranged_armor_bonus": 0
             }
         },
         "prerequisites": ["CastleLandmark"]
@@ -41,12 +62,33 @@
                 "melee_armor_bonus": 0,
                 "ranged_armor_bonus": 0
             },
+            "Archer": {
+                "hp_bonus": 10,
+                "ranged_attack_bonus": 2,
+                "melee_attack_bonus": 0,
+                "melee_armor_bonus": 0,
+                "ranged_armor_bonus": 0
+            },
             "RoyalKnight": {
                 "hp_bonus": 40,
                 "ranged_attack_bonus": 0,
                 "melee_attack_bonus": 5,
                 "melee_armor_bonus": 1,
                 "ranged_armor_bonus": 1
+            },
+            "GhaziRider": {
+                "hp_bonus": 35,
+                "ranged_attack_bonus": 0,
+                "melee_attack_bonus": 3,
+                "melee_armor_bonus": 0,
+                "ranged_armor_bonus": 1
+            },
+            "ZhugeNu": {
+                "hp_bonus": 10,
+                "ranged_attack_bonus": 9,
+                "melee_attack_bonus": 0,
+                "melee_armor_bonus": 0,
+                "ranged_armor_bonus": 0
             }
         },
         "prerequisites": ["ImperialLandmark"]
@@ -72,6 +114,15 @@
     "BlackSmithFeudalRangedAttack": {
         "type": "Research",
         "ranged_attack_bonus": 1,
+        "melee_attack_bonus": 0,
+        "hp_bonus": 0,
+        "melee_armor_bonus": 0,
+        "ranged_armor_bonus": 0,
+        "cost": 175
+    },
+    "BlackSmithFeudalRangedAttackZhugeNu": {
+        "type": "Research",
+        "ranged_attack_bonus": 3,
         "melee_attack_bonus": 0,
         "hp_bonus": 0,
         "melee_armor_bonus": 0,

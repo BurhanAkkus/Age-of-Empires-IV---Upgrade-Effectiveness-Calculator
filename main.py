@@ -5,13 +5,14 @@ import copy
 from unit import Unit
 from upgrade import Upgrade
 
-unit_names = ["LongBowman", "RoyalKnight"]
+unit_names = ["LongBowman", "RoyalKnight","ZhugeNu","Archer","GhaziRider"]
 upgrade_names = ["CastleLandmark","ImperialLandmark",
     "VeteranUpgrade", "EliteUpgrade", "BlackSmithFeudalMeleeArmor",
-    "BlackSmithFeudalRangedArmor", "BlackSmithFeudalRangedAttack",
-    "BlackSmithCastleMeleeArmor", "BlackSmithCastleRangedArmor",
+    "BlackSmithFeudalRangedArmor", "BlackSmithFeudalRangedAttack","BlackSmithFeudalMeleeAttack",
+    "BlackSmithCastleMeleeArmor", "BlackSmithCastleRangedArmor","BlackSmithCastleMeleeAttack"
     "BlackSmithCastleRangedAttack", "BlackSmithImperialRangedArmor",
-    "BlackSmithImperialMeleeArmor", "BlackSmithImperialRangedAttack"
+    "BlackSmithImperialMeleeArmor", "BlackSmithImperialRangedAttack",
+"BlackSmithFeudalRangedAttackZhugeNu"
 ]
 
 def get_applicable_upgrades(unit,selected_upgrades):
@@ -38,7 +39,7 @@ def basic_effectiveness(unit):
     """
     return unit.hp * unit.getAttack()
 
-def calculate_upgrade_effectiveness(upgrades, unit):
+def calculate_upgrade_effectiveness(upgrades, unit,blackSmith=False):
     """
     Calculates the minimum standing army count required to make the upgrades effective.
 
@@ -59,6 +60,8 @@ def calculate_upgrade_effectiveness(upgrades, unit):
     print(f"Powerup Factor: {powerup_factor}")
 
     # Calculate the effectiveness threshold
+    if(blackSmith):
+        upgrades[0].cost = upgrades[0].cost + 150
     effectiveness_threshold = sum(upgrade.cost for upgrade in upgrades) / (unit.cost * (powerup_factor - 1))
     return math.ceil(effectiveness_threshold)
 
@@ -121,7 +124,7 @@ def main():
                     break
 
                 # Calculate minimum standing army count for effectiveness
-                minimum_army_count = calculate_upgrade_effectiveness(selected_upgrades, unit)
+                minimum_army_count = calculate_upgrade_effectiveness(selected_upgrades, unit,blackSmith=True)
                 print(f"\nMinimum standing army count to make the selected upgrades effective: {minimum_army_count}")
 
                 # Apply the upgrades if the user wants

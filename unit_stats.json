@@ -8,6 +8,15 @@
         "ranged_armor": 0,
         "cost": 90
     },
+    "Archer": {
+        "type": "Ranged",
+        "hp": 70,
+        "ranged_attack_damage": 5,
+        "melee_attack_damage": 0,
+        "melee_armor": 0,
+        "ranged_armor": 0,
+        "cost": 80
+    },
     "RoyalKnight": {
         "type": "Melee",
         "hp": 190,
@@ -16,5 +25,23 @@
         "melee_armor": 3,
         "ranged_armor": 3,
         "cost": 240
+    },
+    "GhaziRider": {
+        "type": "Melee",
+        "hp": 135,
+        "ranged_attack_damage": 0,
+        "melee_attack_damage": 12,
+        "melee_armor": 0,
+        "ranged_armor": 2,
+        "cost": 140
+    },
+    "ZhugeNu": {
+        "type": "Ranged",
+        "hp": 70,
+        "ranged_attack_damage": 12,
+        "melee_attack_damage": 0,
+        "melee_armor": 0,
+        "ranged_armor": 0,
+        "cost": 80
     }
 }
