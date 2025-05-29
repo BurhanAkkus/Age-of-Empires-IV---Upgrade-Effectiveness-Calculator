@@ -9,7 +9,7 @@ unit_names = ["LongBowman", "RoyalKnight","ZhugeNu","Archer","GhaziRider"]
 upgrade_names = ["CastleLandmark","ImperialLandmark",
     "VeteranUpgrade", "EliteUpgrade", "BlackSmithFeudalMeleeArmor",
     "BlackSmithFeudalRangedArmor", "BlackSmithFeudalRangedAttack","BlackSmithFeudalMeleeAttack",
-    "BlackSmithCastleMeleeArmor", "BlackSmithCastleRangedArmor","BlackSmithCastleMeleeAttack"
+    "BlackSmithCastleMeleeArmor", "BlackSmithCastleRangedArmor","BlackSmithCastleMeleeAttack",
     "BlackSmithCastleRangedAttack", "BlackSmithImperialRangedArmor",
     "BlackSmithImperialMeleeArmor", "BlackSmithImperialRangedAttack",
 "BlackSmithFeudalRangedAttackZhugeNu"
@@ -39,6 +39,9 @@ def basic_effectiveness(unit):
     """
     return unit.hp * unit.getAttack()
 
+def combat_effectiveness(count,hp,dps):
+    return count**2 * hp * dps
+
 def calculate_upgrade_effectiveness(upgrades, unit,blackSmith=False):
     """
     Calculates the minimum standing army count required to make the upgrades effective.
@@ -59,10 +62,13 @@ def calculate_upgrade_effectiveness(upgrades, unit,blackSmith=False):
     powerup_factor = basic_effectiveness(upgraded_unit) / basic_effectiveness(unit)
     print(f"Powerup Factor: {powerup_factor}")
 
+    total_cost = sum([upgrade.cost for upgrade in upgrades])
     # Calculate the effectiveness threshold
     if(blackSmith):
         upgrades[0].cost = upgrades[0].cost + 150
-    effectiveness_threshold = sum(upgrade.cost for upgrade in upgrades) / (unit.cost * (powerup_factor - 1))
+    delta_count = total_cost / unit.cost
+
+    effectiveness_threshold = delta_count / (math.sqrt(powerup_factor) - 1)
     return math.ceil(effectiveness_threshold)
 
 def main():
